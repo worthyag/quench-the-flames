@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
+
+:root {
+    --main-font: 'Germania One', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font);
+}
+
+.header {
+    display: flex;
+    margin: 16px 32px;
+}
+
+#game-title {
+    font-size: 48px;
+    margin-right: 16px;
+}
+
+/* Game grid */
+.game-grid {
+    background-color: blueviolet;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+[class^='game-box'] {
+    background-color: blue;
+    width: 150px;
+    height: 150px;
+}
