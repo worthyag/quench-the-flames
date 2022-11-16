@@ -9,10 +9,23 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <!-- Header for the title + logo -->
     <div class="header">
         <h1 id="game-title">Quench the flames</h1>
         <img src="./img/icons/icon-logo-small.svg" alt="Quench the flames logo">
     </div>
+    <!-- Where the scores will be shown -->
+    <div class="scores">
+        <div class="player-1">
+            <p class="water-bearer character">Water Bearer</p>
+            <span class="wb-score score">0</span>
+        </div>
+        <div class="player-2">
+            <p class="fire-demon character">Fire Demon</p>
+            <span class="fd-score score">0</span>
+        </div>
+    </div>
+    <!-- Game grid where the game will take place -->
     <div class="game-grid">
         <div class="game-box-1">
             <img src="./img/icons/icon-water.svg" alt="water symbol">
@@ -28,5 +41,12 @@
         <div class="game-box-8"></div>
         <div class="game-box-9"></div>
     </div>
+    <div class="round">
+        <p>Round <span class="round-number">1</span></p>
+    </div>
+    <footer>
+        <p>Created with <span class="heart">&#9825;</span> by <a href="https://github.com/worthyag" target="_blank">worthyag</a> | 
+            <a href="https://github.com/worthyag/quench-the-flames" target="_blank">source</a></p>
+    </footer>
 </body>
 </html>

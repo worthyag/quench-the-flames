@@ -20,9 +20,29 @@
     margin-right: 16px;
 }
 
+/* Scores */
+.scores {
+    display: flex;
+    width: 600px;
+    margin: 32px auto;
+    font-size: 32px;
+}
+
+[class^='player'] {
+    display: flex;
+    margin: 0 24px;
+    padding: 8px 16px;
+    border-radius: 16px;
+    box-shadow: 4px 4px 40px 5px rgba(0, 0, 0, 0.1);
+}
+
+[class^='player'] > p {
+    margin-right: 32px;
+}
+
+
 /* Game grid */
 .game-grid {
-    /* background-color: blueviolet; */
     padding: 16px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -49,4 +69,84 @@
 
 [class^='game-box'] > img {
     width: 75px;
+}
+
+/* round */
+.round > p {
+    font-size: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 32px;
+}
+
+
+/* Score / game modes */
+.current {
+    background-color: rgb(243, 189, 156);
+    box-shadow: 4px 4px 20px 5px rgba(244, 138, 72, 0.407);
+}
+.current:hover {
+    background-color: rgb(242, 167, 120);
+    box-shadow: 4px 4px 20px 5px rgba(244, 138, 72, 0.407);
+}
+
+.tie {
+    background-color: rgb(237, 223, 130);
+    box-shadow: 4px 4px 20px 5px rgba(237, 223, 130, 0.407);
+}
+.tie:hover {
+    background-color: rgb(238, 220, 106);
+    box-shadow: 4px 4px 20px 5px rgba(237, 223, 130, 0.407);
+}
+
+.won {
+    background-color: rgb(102, 202, 110);
+    box-shadow: 4px 4px 20px 5px rgba(102, 202, 110, 0.407);
+}
+.won:hover {
+    background-color: rgb(74, 199, 84);
+    box-shadow: 4px 4px 20px 5px rgba(102, 202, 110, 0.407);
+}
+
+.lost {
+    background-color: rgb(244, 134, 134);
+    box-shadow: 4px 4px 20px 5px rgba(243, 73, 73, 0.407);
+}
+.lost:hover {
+    background-color: rgb(241, 99, 99);
+    box-shadow: 4px 4px 20px 5px rgba(243, 73, 73, 0.407);
+}
+
+
+/* footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 4px 4px 25px 5px #55555532;
+    padding: 4px 0 8px 32px;
+}
+
+footer > p {
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+footer > p > a {
+    text-decoration: none;
+    color: #000000;
+    padding: 0 8px;
+} 
+
+footer > p > a:hover {
+    font-size: 20px;
+}
+
+footer > p > a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+span.heart {
+    color: rgb(207, 62, 62);
 }
