@@ -22,17 +22,31 @@
 
 /* Game grid */
 .game-grid {
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     padding: 16px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    width: 550px;
+    width: 407px;
+    height: 407px;
     margin: 0 auto;
 }
 
 [class^='game-box'] {
-    background-color: blue;
-    width: 150px;
-    height: 150px;
+    background-color: #EEEEEE;
+    border-radius: 16px;
+    height: 125px;
+    width: 125px;
+    display: flex;
+    justify-content: center;
+}
+
+[class^='game-box']:hover {
+    background-color: #DDDDDD;
+    box-shadow: 4px 4px 25px 5px #55555532;
+    transform: scale(1.04);
+}
+
+[class^='game-box'] > img {
+    width: 75px;
 }
