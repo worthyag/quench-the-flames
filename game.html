@@ -8,42 +8,59 @@
     <link rel="icon" href="./img/icons/icon-logo-small.svg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <!-- Header for the title + logo -->
+<!-- ////////////////////////////// Game Page \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+<body id="game-page">
+    <!-- ////////////////////////////// Header for the title + logo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <div class="header">
         <h1 id="game-title">Quench the flames</h1>
         <img src="./img/icons/icon-logo-small.svg" alt="Quench the flames logo">
     </div>
-    <!-- Where the scores will be shown -->
-    <div class="scores">
-        <div class="player-1">
-            <p class="water-bearer character">Water Bearer</p>
-            <span class="wb-score score">0</span>
-        </div>
-        <div class="player-2">
-            <p class="fire-demon character">Fire Demon</p>
-            <span class="fd-score score">0</span>
-        </div>
+
+    <!-- ////////////////////////////// Return Button  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <div class="return">
+        <a href="./start.html">
+            <button class="return btn">Return</button>
+        </a>
     </div>
-    <!-- Game grid where the game will take place -->
-    <div class="game-grid">
-        <div class="game-box-1">
-            <img src="./img/icons/icon-water.svg" alt="water symbol">
+
+    <!-- ////////////////////////////// Main Section \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <main>
+        <!-- ////////////////////////////// Where the scores will be shown \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="scores">
+            <div class="player-1">
+                <p class="water-bearer character">Water Bearer</p>
+                <span class="wb-score score">0</span>
+            </div>
+            <div class="player-2">
+                <p class="fire-demon character">Fire Demon</p>
+                <span class="fd-score score">0</span>
+            </div>
         </div>
-        <div class="game-box-2"></div>
-        <div class="game-box-3"></div>
-        <div class="game-box-4"></div>
-        <div class="game-box-5">
-            <img src="./img/icons/icon-flame.svg" alt="flame symbol">
+
+        <!-- ////////////////////////////// Game grid where the game will take place \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="game-grid">
+            <div class="game-box-1">
+                <img src="./img/icons/icon-water.svg" alt="water symbol">
+            </div>
+            <div class="game-box-2"></div>
+            <div class="game-box-3"></div>
+            <div class="game-box-4"></div>
+            <div class="game-box-5">
+                <img src="./img/icons/icon-flame.svg" alt="flame symbol">
+            </div>
+            <div class="game-box-6"></div>
+            <div class="game-box-7"></div>
+            <div class="game-box-8"></div>
+            <div class="game-box-9"></div>
         </div>
-        <div class="game-box-6"></div>
-        <div class="game-box-7"></div>
-        <div class="game-box-8"></div>
-        <div class="game-box-9"></div>
-    </div>
-    <div class="round">
-        <p>Round <span class="round-number">1</span></p>
-    </div>
+
+         <!-- ////////////////////////////// Where the round number will be displayed  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <div class="round">
+            <p>Round <span class="round-number">1</span></p>
+        </div>
+    </main>
+
+    <!-- ////////////////////////////// Footer \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <footer>
         <p>Created with <span class="heart">&#9825;</span> by <a href="https://github.com/worthyag" target="_blank">worthyag</a> | 
             <a href="https://github.com/worthyag/quench-the-flames" target="_blank">source</a></p>

@@ -1,4 +1,4 @@
-/* ////////////////////////////// title \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+/* ////////////////////////////// Displays the title \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 #start-page > .header {
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@
 }
 
 
-/*  ////////////////////////////// cards \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+/*  ////////////////////////////// Displays the player option cards \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .game-options {
     display: grid;
     grid-template-columns: 1fr 200px 1fr;
