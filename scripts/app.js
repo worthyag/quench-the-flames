@@ -13,20 +13,28 @@ const gameBoard = (() => {
     const clearGameBoard = () => {};
 
     /** Checks whether the inputted index of the game board array is empty (empty string). */
-    const isPosEmpty = (index) => {};
+    const isPosEmpty = (index) => gameBoard[index] === "";
 
     /** 
      * Takes a given marker and adds it to the array. First checks whether the pos is empty, if so it
      * adds it to the array. Always calls renderGameBoard at the end. 
      */
-    const addMarker = (marker, index) => {};
+    const addMarker = (marker, index) => {
+        if (isPosEmpty(index))
+            gameBoard[index] = marker
+        else
+            console.log("Error not empty!");
+    };
 
-    return {gameBoard, renderGameBoard, clearGameBoard, isPosEmpty, addMarker};
+    return {gameBoard, renderGameBoard, clearGameBoard, addMarker};
 })();
 
-// testing
-console.log("game board: ", gameBoard.gameBoard);
-
+console.log(gameBoard.gameBoard);
+console.log(gameBoard.addMarker('X', 7));
+console.log(gameBoard.addMarker('X', 2));
+console.log(gameBoard.addMarker('X', 4));
+console.log(gameBoard.addMarker('X', 4));
+console.log(gameBoard.gameBoard);
 
 ////////////////////////////// Player Object (factory function) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const player = (name, character) => {
@@ -56,22 +64,13 @@ const player = (name, character) => {
     const play = () => {};
 
     /** Sets which players turn it is. */
-    const setPlay = () => {};
-
+    const setPlayStatus = (status) => (status === true) ? canPlay = false : canPlay = true;
     /** Returns the state of canPlay. */
-    const getPlay = () => {};
+    const getPlayStatus = () => canPlay;
 
-    return {getName, getCharacter, marker, canPlay, assignMarker, play, setPlay, getPlay};
+    return {getName, getCharacter, marker, canPlay, assignMarker, play, setPlayStatus, getPlayStatus};
 }
 
-// testing
-const waterBearer = player("Ocean", "water bearer");
-console.log(waterBearer.getCharacter());
-waterBearer.assignMarker();
-
-const fireDemon = player("Blaze", "fire demon");
-console.log(fireDemon.getCharacter());
-fireDemon.assignMarker();
 
 
 ////////////////////////////// Game Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -84,9 +83,12 @@ const game = (() => {
     let gameOver = false;
 
 
+    /** Returns the round number. */
+    const getRound = () => round;
+
     /**
      * Checks for a 3 in a row pattern or a tie, and sets the roundOver boolean accordingly. 
-     * If roundOver is true, setPlay to false, and calls newRound().
+     * If roundOver is true, setPlayStatus to false, and calls newRound().
      */
     const isRoundOver = () => {};
 
@@ -102,11 +104,11 @@ const game = (() => {
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls selectFirstPlayer(). */
     const startGame = () => {};
 
-    /** Randomly decides who plays first, calls setPlay(). */
+    /** Randomly decides who plays first, calls setPlayStatus(). */
     const selectFirstPlayer = () => {};
 
     /**
-     * Assigns whose turn it is to play by calling setPlay(), which sets canPlay to true or false. 
+     * Assigns whose turn it is to play by calling setPlayStatus(), which sets canPlay to true or false. 
      * Highlights current player’s name.
      */
     const currentPlayer = () => {};
@@ -117,16 +119,13 @@ const game = (() => {
     /** Displays the button to start/restart game. */
     const newGame = () => {};
 
-    /** Clears the board, sets gameOver and roundOver to false, setPlay to false. */
+    /** Clears the board, sets gameOver and roundOver to false, setPlayStatus to false. */
     const resetGame = () => {};
 
     /** Sets round to 1, and renders it to the page. */
     const roundReset = () => {};
 
-    return {round, roundOver, gameOver,
+    return {getRound, round, roundOver, gameOver,
             isRoundOver, isGameOver, displayMessage, startGame, selectFirstPlayer,
             currentPlayer, newRound, newGame, resetGame, roundReset};
 })();
-
-// testing
-console.log("GAME OVER? ", game.gameOver);
