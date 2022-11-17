@@ -29,12 +29,12 @@ const gameBoard = (() => {
     return {gameBoard, renderGameBoard, clearGameBoard, addMarker};
 })();
 
-console.log(gameBoard.gameBoard);
-console.log(gameBoard.addMarker('X', 7));
-console.log(gameBoard.addMarker('X', 2));
-console.log(gameBoard.addMarker('X', 4));
-console.log(gameBoard.addMarker('X', 4));
-console.log(gameBoard.gameBoard);
+// console.log(gameBoard.gameBoard);
+// console.log(gameBoard.addMarker('X', 7));
+// console.log(gameBoard.addMarker('X', 2));
+// console.log(gameBoard.addMarker('X', 4));
+// console.log(gameBoard.addMarker('X', 4));
+// console.log(gameBoard.gameBoard);
 
 ////////////////////////////// Player Object (factory function) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const player = (name, character) => {
@@ -43,35 +43,60 @@ const player = (name, character) => {
      * Character- Whether they are playing as a water bearer or as a fire demon.
      */
 
-    /** The symbol of the chosen character */
+    /** The symbol of the chosen character. */
     let marker = "";
     /** Boolean that decides whether it is a players turn or not. */
     let canPlay = false;
 
 
-    /** Returns the name */
+    /** Returns the name. */
     const getName = () => name;
-    /** Returns the character */
+    /** Returns the character. */
     const getCharacter = () => character;
 
     /** Assigns a marker based on the character they are playing as. */
-    const assignMarker = () => console.log(`Hello ${name}!`);
+    const assignMarker = () => marker = (character === "water bearer") ? "W" : "F";
+
+    /** Returns the marker */
+    const getMarker = () => marker;
 
     /**
      * When the DOM element is clicked this is ran. Firsts checks whether canPlay is true. 
      * If so it passes the target and marker to the addMarker(marker, target) function. Calls currentPlayer().
      */
-    const play = () => {};
+    const play = (target) => {
+        if (canPlay) {
+            gameBoard.addMarker(marker, target);
+        }
+    };
 
     /** Sets which players turn it is. */
-    const setPlayStatus = (status) => (status === true) ? canPlay = false : canPlay = true;
+    const setPlayStatus = (status) => canPlay = (status === true) ? false : true;
     /** Returns the state of canPlay. */
     const getPlayStatus = () => canPlay;
 
-    return {getName, getCharacter, marker, canPlay, assignMarker, play, setPlayStatus, getPlayStatus};
+    return {getName, getCharacter, assignMarker, getMarker, play, setPlayStatus, getPlayStatus};
 }
 
+// testing
+const ocean = player("Oceania", "water bearer");
+ocean.assignMarker();
+console.log("Ocean's marker: ", ocean.getMarker());
+console.log("Start game board: ", gameBoard.gameBoard);
+ocean.setPlayStatus(ocean.getPlayStatus());
+ocean.play(3);
+console.log("Play 1 game board: ", gameBoard.gameBoard);
 
+const blaze = player("Blaze", "fire demon");
+blaze.assignMarker();
+console.log("Blaze's marker: ", blaze.getMarker());
+blaze.setPlayStatus(blaze.getPlayStatus());
+blaze.play(2);
+console.log("Play 2 game board: ", gameBoard.gameBoard);
+
+ocean.play(5);
+blaze.play(1);
+console.log("Play 3 game board: ", gameBoard.gameBoard);
 
 ////////////////////////////// Game Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const game = (() => {
