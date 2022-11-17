@@ -1,4 +1,4 @@
-/* title */
+/* ////////////////////////////// title \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 #start-page > .header {
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@
 }
 
 
-/*  cards */
+/*  ////////////////////////////// cards \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .game-options {
     display: grid;
     grid-template-columns: 1fr 200px 1fr;
@@ -61,27 +61,4 @@
     font-size: 112px;
     text-transform: uppercase;
     margin: auto;
-}
-
-/* button */
-.buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-}
-
-.start-btn {
-    padding: 8px 16px;
-    border-radius: 8px;
-    background-color: #000000;
-    color: #FFFFFF;
-    outline: none;
-    border: none;
-    font-size: 24px;
-}
-
-.start-btn:hover {
-    box-shadow: 4px 4px 20px 5px rgba(0, 0, 0, 0.335);
-    cursor: pointer;
-    background-color: #3985ae;
 }

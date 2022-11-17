@@ -1,15 +1,20 @@
+/* ////////////////////////////// Importing the Font \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 @import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
 
+/* ////////////////////////////// Root Styles \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 :root {
     --main-font: 'Germania One', cursive;
 }
 
+
+/* ////////////////////////////// Resetting and Setting \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 * {
     margin: 0;
     padding: 0;
     font-family: var(--main-font);
 }
 
+/* ////////////////////////////// Header that displays the title \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .header {
     display: flex;
     margin: 16px 32px;
@@ -20,7 +25,30 @@
     margin-right: 16px;
 }
 
-/* Scores */
+/* ////////////////////////////// button \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.start-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #000000;
+    color: #FFFFFF;
+    outline: none;
+    border: none;
+    font-size: 24px;
+}
+
+.start-btn:hover {
+    box-shadow: 4px 4px 20px 5px rgba(0, 0, 0, 0.335);
+    cursor: pointer;
+    background-color: #3985ae;
+}
+
+/* ////////////////////////////// Container that displays the scores \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .scores {
     display: flex;
     width: 600px;
@@ -41,7 +69,7 @@
 }
 
 
-/* Game grid */
+/* ////////////////////////////// Container that displays the game grid \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .game-grid {
     padding: 16px;
     display: grid;
@@ -71,7 +99,7 @@
     width: 75px;
 }
 
-/* round */
+/* ////////////////////////////// Container that displays the round \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .round > p {
     font-size: 32px;
     text-align: center;
@@ -80,7 +108,7 @@
 }
 
 
-/* Score / game modes */
+/* ////////////////////////////// Score / game modes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .current {
     background-color: rgb(243, 189, 156);
     box-shadow: 4px 4px 20px 5px rgba(244, 138, 72, 0.407);
@@ -118,7 +146,7 @@
 }
 
 
-/* footer */
+/* ////////////////////////////// footer \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 footer {
     position: absolute;
     bottom: 0;
