@@ -4,13 +4,38 @@ const gameBoard = (() => {
     let gameBoard = ["", "", "",
                        "", "", "",
                        "", "", ""];
+    const gameGrid = document.querySelector(".game-grid");
+    let gameGridArray = [...gameGrid.children];
 
 
     /** Takes what is in the array and renders it to the web page. Always calls isRoundOver() at the end. */
-    const renderGameBoard = () => {};
+    const renderGameBoard = () => {
+        // console.log(gameGridArray);
+
+        const water = document.createElement('img');
+        water.setAttribute('src', "./img/icons/icon-water.svg");
+        const flame = document.createElement('img');
+        flame.setAttribute('src', "./img/icons/icon-flame.svg");
+
+        for (let i = 0; i < 9; i++) {
+            // if (parseInt(gameGridArray[i].getAttribute('data-index')) === 0)
+
+            if (gameBoard[i] === "W")
+                console.log("Is W");
+                // gameGridArray[i].appendChild(water);
+            else if (gameBoard[i] === "F")
+                gameGridArray[i].appendChild(flame);
+            else
+                gameGridArray[i].innerHTML = gameBoard[i];
+        }
+    };
 
     /** Empties the game board array. */
-    const clearGameBoard = () => {};
+    const clearGameBoard = () => {
+        for (let i = 0; i < 9; i++) {
+            gameGridArray[i].innerHTML = "";
+        }
+    };
 
     /** Checks whether the inputted index of the game board array is empty (empty string). */
     const isPosEmpty = (index) => gameBoard[index] === "";
@@ -20,13 +45,16 @@ const gameBoard = (() => {
      * adds it to the array. Always calls renderGameBoard at the end. 
      */
     const addMarker = (marker, index) => {
-        if (isPosEmpty(index))
-            gameBoard[index] = marker
+        if (isPosEmpty(index)) {
+            gameBoard[index] = marker;
+            clearGameBoard();
+            renderGameBoard();
+        }
         else
             console.log("Error not empty!");
     };
 
-    return {gameBoard, renderGameBoard, clearGameBoard, addMarker};
+    return {gameBoard, renderGameBoard, clearGameBoard, addMarker, gameGridArray};
 })();
 
 // console.log(gameBoard.gameBoard);
@@ -67,6 +95,7 @@ const player = (name, character) => {
     const play = (target) => {
         if (canPlay) {
             gameBoard.addMarker(marker, target);
+            // canPlay = false;
         }
     };
 
@@ -87,16 +116,18 @@ ocean.setPlayStatus(ocean.getPlayStatus());
 ocean.play(3);
 console.log("Play 1 game board: ", gameBoard.gameBoard);
 
-const blaze = player("Blaze", "fire demon");
-blaze.assignMarker();
-console.log("Blaze's marker: ", blaze.getMarker());
-blaze.setPlayStatus(blaze.getPlayStatus());
-blaze.play(2);
-console.log("Play 2 game board: ", gameBoard.gameBoard);
+// const blaze = player("Blaze", "fire demon");
+// blaze.assignMarker();
+// console.log("Blaze's marker: ", blaze.getMarker());
+// blaze.setPlayStatus(blaze.getPlayStatus());
+// blaze.play(2);
+// console.log("Play 2 game board: ", gameBoard.gameBoard);
 
-ocean.play(5);
-blaze.play(1);
-console.log("Play 3 game board: ", gameBoard.gameBoard);
+// ocean.play(5);
+// blaze.play(1);
+// console.log("Play 3 game board: ", gameBoard.gameBoard);
+
+gameBoard.renderGameBoard();
 
 ////////////////////////////// Game Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const game = (() => {
