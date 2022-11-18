@@ -4,29 +4,28 @@ const gameBoard = (() => {
     let gameBoard = ["", "", "",
                        "", "", "",
                        "", "", ""];
+    /** Stores the game grid. */
     const gameGrid = document.querySelector(".game-grid");
+    /** Stores the div elements that make up the game grid. */
     let gameGridArray = [...gameGrid.children];
 
 
     /** Takes what is in the array and renders it to the web page. Always calls isRoundOver() at the end. */
     const renderGameBoard = () => {
-        // console.log(gameGridArray);
-
-        const water = document.createElement('img');
-        water.setAttribute('src', "./img/icons/icon-water.svg");
-        const flame = document.createElement('img');
-        flame.setAttribute('src', "./img/icons/icon-flame.svg");
-
         for (let i = 0; i < 9; i++) {
-            // if (parseInt(gameGridArray[i].getAttribute('data-index')) === 0)
-
-            if (gameBoard[i] === "W")
-                console.log("Is W");
-                // gameGridArray[i].appendChild(water);
-            else if (gameBoard[i] === "F")
+            if (gameBoard[i] === "W") {
+                const water = document.createElement('img');
+                water.setAttribute('src', "./img/icons/icon-water.svg");
+                gameGridArray[i].appendChild(water);
+            }
+            else if (gameBoard[i] === "F") {
+                const flame = document.createElement('img');
+                flame.setAttribute('src', "./img/icons/icon-flame.svg");
                 gameGridArray[i].appendChild(flame);
-            else
+            }
+            else {
                 gameGridArray[i].innerHTML = gameBoard[i];
+            }      
         }
     };
 
@@ -57,12 +56,6 @@ const gameBoard = (() => {
     return {gameBoard, renderGameBoard, clearGameBoard, addMarker, gameGridArray};
 })();
 
-// console.log(gameBoard.gameBoard);
-// console.log(gameBoard.addMarker('X', 7));
-// console.log(gameBoard.addMarker('X', 2));
-// console.log(gameBoard.addMarker('X', 4));
-// console.log(gameBoard.addMarker('X', 4));
-// console.log(gameBoard.gameBoard);
 
 ////////////////////////////// Player Object (factory function) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const player = (name, character) => {
@@ -85,11 +78,11 @@ const player = (name, character) => {
     /** Assigns a marker based on the character they are playing as. */
     const assignMarker = () => marker = (character === "water bearer") ? "W" : "F";
 
-    /** Returns the marker */
+    /** Returns the marker. */
     const getMarker = () => marker;
 
     /**
-     * When the DOM element is clicked this is ran. Firsts checks whether canPlay is true. 
+     * When the DOM element is clicked this is ran. First it checks whether canPlay is true. 
      * If so it passes the target and marker to the addMarker(marker, target) function. Calls currentPlayer().
      */
     const play = (target) => {
@@ -116,18 +109,14 @@ ocean.setPlayStatus(ocean.getPlayStatus());
 ocean.play(3);
 console.log("Play 1 game board: ", gameBoard.gameBoard);
 
-// const blaze = player("Blaze", "fire demon");
-// blaze.assignMarker();
-// console.log("Blaze's marker: ", blaze.getMarker());
-// blaze.setPlayStatus(blaze.getPlayStatus());
-// blaze.play(2);
-// console.log("Play 2 game board: ", gameBoard.gameBoard);
+const blaze = player("Blaze", "fire demon");
+blaze.assignMarker();
+console.log("Blaze's marker: ", blaze.getMarker());
+blaze.setPlayStatus(blaze.getPlayStatus());
+blaze.play(2);
+console.log("Play 2 game board: ", gameBoard.gameBoard);
 
-// ocean.play(5);
-// blaze.play(1);
-// console.log("Play 3 game board: ", gameBoard.gameBoard);
 
-gameBoard.renderGameBoard();
 
 ////////////////////////////// Game Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 const game = (() => {
