@@ -1,4 +1,5 @@
 ////////////////////////////// GameBoard Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/** GameBoard Object (module pattern) */
 const gameBoard = (() => {
     /** Stores the state of the game board, always begins empty (9 empty strings).*/
     let gameBoard = ["", "", "",
@@ -10,23 +11,29 @@ const gameBoard = (() => {
     let gameGridArray = [...gameGrid.children];
 
 
+    /** Creates a specified DOM element. */
+    const createElement = (type, attr, value) => {
+        const element = document.createElement(type);
+        element.setAttribute(attr, value);
+        return element;
+    }
+
     /** Takes what is in the array and renders it to the web page. Always calls isRoundOver() at the end. */
     const renderGameBoard = () => {
         for (let i = 0; i < 9; i++) {
             if (gameBoard[i] === "W") {
-                const water = document.createElement('img');
-                water.setAttribute('src', "./img/icons/icon-water.svg");
-                gameGridArray[i].appendChild(water);
+                gameGridArray[i].appendChild(createElement('img', 'src', "./img/icons/icon-water.svg"));
             }
             else if (gameBoard[i] === "F") {
-                const flame = document.createElement('img');
-                flame.setAttribute('src', "./img/icons/icon-flame.svg");
-                gameGridArray[i].appendChild(flame);
+                gameGridArray[i].appendChild(createElement('img', 'src', "./img/icons/icon-flame.svg"));
             }
             else {
                 gameGridArray[i].innerHTML = gameBoard[i];
             }      
         }
+
+        // Call isRoundOver()
+        game.isRoundOver();
     };
 
     /** Empties the game board array. */
@@ -53,11 +60,12 @@ const gameBoard = (() => {
             console.log("Error not empty!");
     };
 
-    return {gameBoard, renderGameBoard, clearGameBoard, addMarker, gameGridArray};
+    return {gameBoard, renderGameBoard, clearGameBoard, addMarker};
 })();
 
 
 ////////////////////////////// Player Object (factory function) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/** Player Object (factory function) */
 const player = (name, character) => {
     /**
      * Name- Name of the user/player.
@@ -100,25 +108,9 @@ const player = (name, character) => {
     return {getName, getCharacter, assignMarker, getMarker, play, setPlayStatus, getPlayStatus};
 }
 
-// testing
-const ocean = player("Oceania", "water bearer");
-ocean.assignMarker();
-console.log("Ocean's marker: ", ocean.getMarker());
-console.log("Start game board: ", gameBoard.gameBoard);
-ocean.setPlayStatus(ocean.getPlayStatus());
-ocean.play(3);
-console.log("Play 1 game board: ", gameBoard.gameBoard);
-
-const blaze = player("Blaze", "fire demon");
-blaze.assignMarker();
-console.log("Blaze's marker: ", blaze.getMarker());
-blaze.setPlayStatus(blaze.getPlayStatus());
-blaze.play(2);
-console.log("Play 2 game board: ", gameBoard.gameBoard);
-
-
 
 ////////////////////////////// Game Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/** Game Object (module pattern) */
 const game = (() => {
     /** Initially set to 1. Displays the round that is currently being played. */
     let round = 1;
@@ -174,3 +166,27 @@ const game = (() => {
             isRoundOver, isGameOver, displayMessage, startGame, selectFirstPlayer,
             currentPlayer, newRound, newGame, resetGame, roundReset};
 })();
+
+
+
+// testing
+const ocean = player("Oceania", "water bearer");
+ocean.assignMarker();
+console.log("Ocean's marker: ", ocean.getMarker());
+console.log("Start game board: ", gameBoard.gameBoard);
+ocean.setPlayStatus(ocean.getPlayStatus());
+ocean.play(3);
+console.log("Play 1 game board: ", gameBoard.gameBoard);
+
+const blaze = player("Blaze", "fire demon");
+blaze.assignMarker();
+console.log("Blaze's marker: ", blaze.getMarker());
+blaze.setPlayStatus(blaze.getPlayStatus());
+blaze.play(2);
+console.log("Play 2 game board: ", gameBoard.gameBoard);
+
+ocean.play(5);
+blaze.play(1);
+ocean.play(7);
+blaze.play(8);
+console.log("Play 6 game board: ", gameBoard.gameBoard);
