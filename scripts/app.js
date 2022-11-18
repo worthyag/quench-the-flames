@@ -1,3 +1,17 @@
+////////////////////////////// Helper Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/** Helper Object (module pattern) */
+const helper = (() => {
+    /** Creates a specified DOM element. */
+    const createElement = (type, attr, value) => {
+        const element = document.createElement(type);
+        element.setAttribute(attr, value);
+        return element;
+    }
+
+    return {createElement};
+})();
+
+
 ////////////////////////////// GameBoard Object (module pattern) \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 /** GameBoard Object (module pattern) */
 const gameBoard = (() => {
@@ -11,21 +25,14 @@ const gameBoard = (() => {
     let gameGridArray = [...gameGrid.children];
 
 
-    /** Creates a specified DOM element. */
-    const createElement = (type, attr, value) => {
-        const element = document.createElement(type);
-        element.setAttribute(attr, value);
-        return element;
-    }
-
     /** Takes what is in the array and renders it to the web page. Always calls isRoundOver() at the end. */
     const renderGameBoard = () => {
         for (let i = 0; i < 9; i++) {
             if (gameBoard[i] === "W") {
-                gameGridArray[i].appendChild(createElement('img', 'src', "./img/icons/icon-water.svg"));
+                gameGridArray[i].appendChild(helper.createElement('img', 'src', "./img/icons/icon-water.svg"));
             }
             else if (gameBoard[i] === "F") {
-                gameGridArray[i].appendChild(createElement('img', 'src', "./img/icons/icon-flame.svg"));
+                gameGridArray[i].appendChild(helper.createElement('img', 'src', "./img/icons/icon-flame.svg"));
             }
             else {
                 gameGridArray[i].innerHTML = gameBoard[i];
@@ -33,7 +40,7 @@ const gameBoard = (() => {
         }
 
         // Call isRoundOver()
-        game.isRoundOver();
+        console.log(game.isRoundOver());
     };
 
     /** Empties the game board array. */
@@ -127,19 +134,74 @@ const game = (() => {
      * Checks for a 3 in a row pattern or a tie, and sets the roundOver boolean accordingly. 
      * If roundOver is true, setPlayStatus to false, and calls newRound().
      */
-    const isRoundOver = () => {};
+    const isRoundOver = () => {
+        const board = gameBoard.gameBoard;
+
+        if ((board[0] === board[1]) && (board[1] === board[2])) {
+            roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+        }
+
+        else if ((board[3] === board[4]) && (board[4] === board[5])) {
+            roundOver = (board[3] === "W") ? true : (board[3] === "F") ? true : false;
+        }
+
+        else if ((board[6] === board[7]) && (board[7] === board[8])) {
+            roundOver = (board[6] === "W") ? true : (board[6] === "F") ? true : false;
+        }
+
+        else if ((board[0] === board[3]) && (board[3] === board[6])) {
+            roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+        }
+
+        else if ((board[1] === board[4]) && (board[4] === board[7])) {
+            roundOver = (board[1] === "W") ? true : (board[1] === "F") ? true : false;
+        }
+
+        else if ((board[2] === board[5]) && (board[5] === board[8])) {
+            roundOver = (board[2] === "W") ? true : (board[2] === "F") ? true : false;
+        }
+
+        else if ((board[0] === board[4]) && (board[4] === board[8])) {
+            roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+        }
+
+        else if ((board[2] === board[4]) && (board[4] === board[6])) {
+            roundOver = (board[2] === "W") ? true : (board[2] === "F") ? true : false;
+        }
+
+        return roundOver;
+
+        // setPlayStatus to false
+        // calls newRound()
+    };
 
     /**
      * Checks if 3 rounds have been played, and sets the gameOver boolean accordingly. If gameOver 
      * is true calls resetGame(), roundReset(), displayMessage(), newGame().
      */
-    const isGameOver = () => {};
+    const isGameOver = () => {
+        if (round > 3) {
+            gameOver = true;
+
+            // resetGame()
+            // roundReset()
+            // displayMessage()
+            // newGame()
+        }
+    };
 
     /** Creates the display element that congratulates the winner. */
-    const displayMessage = () => {};
+    const displayMessage = () => {
+        const winnerMsg = helper.createElement('div', 'class', 'winner');
+        return winnerMsg;
+    };
 
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls selectFirstPlayer(). */
-    const startGame = () => {};
+    const startGame = () => {
+        resetGame();
+        gameBoard.renderGameBoard();
+        selectFirstPlayer();
+    };
 
     /** Randomly decides who plays first, calls setPlayStatus(). */
     const selectFirstPlayer = () => {};
@@ -151,10 +213,17 @@ const game = (() => {
     const currentPlayer = () => {};
 
     /** round++. Calls isGameOver(). Calls startGame(). */
-    const newRound = () => {};
+    const newRound = () => {
+        round++;
+        isGameOver();
+        startGame();
+    };
 
     /** Displays the button to start/restart game. */
-    const newGame = () => {};
+    const newGame = () => {
+        const restartBtn = helper.createElement('button', 'class', 'btn');
+        return restartBtn;
+    };
 
     /** Clears the board, sets gameOver and roundOver to false, setPlayStatus to false. */
     const resetGame = () => {};
