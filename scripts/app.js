@@ -25,6 +25,9 @@ const gameBoard = (() => {
     let gameGridArray = [...gameGrid.children];
 
 
+    /** Returns the gameGridArray (the div elements inside the game grid). */
+    const getGameGridArray = () => gameGridArray;
+
     /** Takes what is in the array and renders it to the web page. Always calls isRoundOver() at the end. */
     const renderGameBoard = () => {
         for (let i = 0; i < 9; i++) {
@@ -41,6 +44,13 @@ const gameBoard = (() => {
 
         // Call isRoundOver()
         console.log(game.isRoundOver());
+    };
+
+    /** Empties the game grid. */
+    const clearGameGrid = () => {
+        for (let i = 0; i < 9; i++) {
+            gameGridArray[i].innerHTML = "";
+        }
     };
 
     /** Empties the game board array. */
@@ -60,14 +70,14 @@ const gameBoard = (() => {
     const addMarker = (marker, index) => {
         if (isPosEmpty(index)) {
             gameBoard[index] = marker;
-            clearGameBoard();
+            clearGameGrid();
             renderGameBoard();
         }
         else
             console.log("Error not empty!");
     };
 
-    return {gameBoard, renderGameBoard, clearGameBoard, addMarker};
+    return {gameBoard, getGameGridArray, renderGameBoard, clearGameGrid, clearGameBoard, addMarker};
 })();
 
 
@@ -100,11 +110,25 @@ const player = (name, character) => {
      * When the DOM element is clicked this is ran. First it checks whether canPlay is true. 
      * If so it passes the target and marker to the addMarker(marker, target) function. Calls currentPlayer().
      */
-    const play = (target) => {
-        if (canPlay) {
-            gameBoard.addMarker(marker, target);
-            // canPlay = false;
-        }
+    const play = () => {
+        (gameBoard.getGameGridArray()).forEach((div, index) => {
+            div.addEventListener('click', (e) => {
+                // console.log(`Hi ${parseInt(div.getAttribute('data-index'))}!`);
+
+                const divAttr = parseInt(e.target.getAttribute('data-index'));
+                const imgAttr = parseInt(e.target.parentNode.getAttribute('data-index'));
+
+                if ((divAttr === index) || (imgAttr === index)) {
+                    // console.log("You found me");
+
+                    if (canPlay) {
+                        gameBoard.addMarker(marker, index);
+                        // canPlay = false;
+                    }
+                }
+
+            });
+        });
     };
 
     /** Sets which players turn it is. */
@@ -136,40 +160,76 @@ const game = (() => {
      */
     const isRoundOver = () => {
         const board = gameBoard.gameBoard;
+        let status = [];
 
         if ((board[0] === board[1]) && (board[1] === board[2])) {
             roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+            status = [roundOver, 0, 1, 2];
         }
 
         else if ((board[3] === board[4]) && (board[4] === board[5])) {
             roundOver = (board[3] === "W") ? true : (board[3] === "F") ? true : false;
+            status = [roundOver, 3, 4, 5];
         }
 
         else if ((board[6] === board[7]) && (board[7] === board[8])) {
             roundOver = (board[6] === "W") ? true : (board[6] === "F") ? true : false;
+            status = [roundOver, 6, 7, 8];
         }
 
         else if ((board[0] === board[3]) && (board[3] === board[6])) {
             roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+            status = [roundOver, 0, 3, 6];
         }
 
         else if ((board[1] === board[4]) && (board[4] === board[7])) {
             roundOver = (board[1] === "W") ? true : (board[1] === "F") ? true : false;
+            status = [roundOver, 1, 4, 7];
         }
 
         else if ((board[2] === board[5]) && (board[5] === board[8])) {
             roundOver = (board[2] === "W") ? true : (board[2] === "F") ? true : false;
+            status = [roundOver, 2, 5, 8];
         }
 
         else if ((board[0] === board[4]) && (board[4] === board[8])) {
             roundOver = (board[0] === "W") ? true : (board[0] === "F") ? true : false;
+            status = [roundOver, 0, 4, 8];
         }
 
         else if ((board[2] === board[4]) && (board[4] === board[6])) {
             roundOver = (board[2] === "W") ? true : (board[2] === "F") ? true : false;
+            status = [roundOver, 2, 4, 6];
         }
 
-        return roundOver;
+        else {
+            let count = [0, 0]; // W : F
+
+            for (let i of board) {
+                (i === "W") ? count[0]++ : (i === "F") ? count[1]++ : "";
+            }
+
+            roundOver = ((count[0] === 5) && (count[1] === 4) ? true :
+                         (count[0] === 4) && (count[1] === 5)) ? true : false;
+        }
+
+        console.log(((roundOver) && (status.length === 4)) ? "You Won!" : 
+                    (roundOver) ? "You Tied!" : "Still going...");
+
+        if (roundOver) {
+            if (status[0]) {
+                gameBoard.getGameGridArray()[status[1]].classList.add("won");
+                gameBoard.getGameGridArray()[status[2]].classList.add("won");
+                gameBoard.getGameGridArray()[status[3]].classList.add("won");
+            }
+            else {
+                gameBoard.getGameGridArray().forEach((div) => {
+                    div.classList.add("tie");
+                });
+            }
+        }
+
+        return (roundOver) ? "Round complete" : "Round incomplete / starting";
 
         // setPlayStatus to false
         // calls newRound()
@@ -225,11 +285,16 @@ const game = (() => {
         return restartBtn;
     };
 
-    /** Clears the board, sets gameOver and roundOver to false, setPlayStatus to false. */
+    /** Clears the board, sets gameOver and roundOver to false, set canPlay to false. */
     const resetGame = () => {
+        gameBoard.clearGameGrid();
+        gameBoard.clearGameBoard();
         gameOver = false;
         roundOver = false;
-        // setPlayStatus to false.
+
+        // Set canPlay to false for both players.
+        ocean.setPlayStatus(true);
+        blaze.setPlayStatus(true);
     };
 
     /** Sets round to 1, and renders it to the page. */
@@ -244,25 +309,33 @@ const game = (() => {
 })();
 
 
-
-// testing
+// Characters / Players
+// Ocean
 const ocean = player("Oceania", "water bearer");
 ocean.assignMarker();
-console.log("Ocean's marker: ", ocean.getMarker());
-console.log("Start game board: ", gameBoard.gameBoard);
-ocean.setPlayStatus(ocean.getPlayStatus());
-ocean.play(3);
-console.log("Play 1 game board: ", gameBoard.gameBoard);
 
+// Blaze
 const blaze = player("Blaze", "fire demon");
 blaze.assignMarker();
-console.log("Blaze's marker: ", blaze.getMarker());
-blaze.setPlayStatus(blaze.getPlayStatus());
-blaze.play(2);
-console.log("Play 2 game board: ", gameBoard.gameBoard);
 
-ocean.play(5);
-blaze.play(1);
-ocean.play(7);
-blaze.play(8);
-console.log("Play 6 game board: ", gameBoard.gameBoard);
+
+// Start Game
+game.startGame();
+
+
+// Checking
+console.log(`${ocean.getName()}'s marker: `, ocean.getMarker());
+console.log(`${ocean.getName()}'s play status: ${ocean.getPlayStatus()}`);
+
+console.log(`${blaze.getName()}'s marker: `, blaze.getMarker());
+console.log(`${blaze.getName()}'s play status: ${blaze.getPlayStatus()}`);
+
+
+
+// helpers for testing
+
+// ocean.setPlayStatus(ocean.getPlayStatus());
+// blaze.setPlayStatus(blaze.getPlayStatus());
+
+let oplay = ocean.play();
+let bplay = blaze.play();
