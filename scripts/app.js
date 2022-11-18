@@ -43,7 +43,7 @@ const gameBoard = (() => {
         }
 
         // Call isRoundOver()
-        console.log(game.isRoundOver());
+        game.isRoundOver();
     };
 
     /** Empties the game grid. */
@@ -56,7 +56,7 @@ const gameBoard = (() => {
     /** Empties the game board array. */
     const clearGameBoard = () => {
         for (let i = 0; i < 9; i++) {
-            gameGridArray[i].innerHTML = "";
+            gameBoard[i] = "";
         }
     };
 
@@ -145,10 +145,24 @@ const game = (() => {
     let roundOver = false;
     /** A boolean that lets the program know whether the game is over or not. */
     let gameOver = false;
+    /** Where the round number is displayed on the screen. */
+    const roundMsg = document.querySelector("span.round-number");
 
 
     /** Returns the round number. */
     const getRound = () => round;
+
+    /** Sets the round number. */
+    const setRound = (i) => round = i;
+
+    /** Returns the roundOver boolean. */
+    const getRoundOver = () => roundOver;
+
+    /** Sets the roundOver boolean. */
+    const setRoundOver = (bool) => roundOver = bool;
+
+    /** Sets the roundOver boolean. */
+    const setGameOver = (bool) => gameOver = bool;
 
     /**
      * Checks for a 3 in a row pattern or a tie, and sets the roundOver boolean accordingly. 
@@ -225,10 +239,13 @@ const game = (() => {
             }
         }
 
-        return (roundOver) ? "Round complete" : "Round incomplete / starting";
+        console.log((roundOver) ? "Round complete" : "Round incomplete / starting");
 
-        // setPlayStatus to false
-        // calls newRound()
+        if (getRoundOver()) {
+            newRound();
+        }
+
+        return roundOver;
     };
 
     /**
@@ -254,6 +271,8 @@ const game = (() => {
 
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls currentPlayer(). */
     const startGame = () => {
+        roundMsg.textContent = getRound();
+
         resetGame();
         gameBoard.renderGameBoard();
         currentPlayer();
@@ -286,9 +305,35 @@ const game = (() => {
     /** round++. Calls isGameOver(). Calls startGame(). */
     const newRound = () => {
         round++;
+        roundMsg.textContent = getRound();
         isGameOver();
+
+        setTimeout(function () {
+            for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
+                gameBoard.getGameGridArray()[i].classList.remove("won");
+                gameBoard.getGameGridArray()[i].classList.remove("tie");
+            }
+
+        }, 1000);
+        console.log("Reached the end.");
+
+
         startGame();
     };
+
+    const startRound = () => {
+        setTimeout(function () {
+            resetGame();
+
+            for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
+                gameBoard.getGameGridArray()[i].classList.remove("won");
+                gameBoard.getGameGridArray()[i].classList.remove("tie");
+            }
+
+        }, 1000);
+
+        currentPlayer();
+    }
 
     /** Displays the button to start/restart game. */
     const newGame = () => {
@@ -300,8 +345,9 @@ const game = (() => {
     const resetGame = () => {
         gameBoard.clearGameGrid();
         gameBoard.clearGameBoard();
-        gameOver = false;
-        roundOver = false;
+        
+        setGameOver(false);
+        setRoundOver(false);
 
         // Set canPlay to false for both players.
         ocean.setPlayStatus(true);
@@ -310,11 +356,11 @@ const game = (() => {
 
     /** Sets round to 1, and renders it to the page. */
     const roundReset = () => {
-        round = 1;
-        // renders it to the page.
+        setRound(1);
+        roundMsg.textContent = getRound();
     };
 
-    return {getRound, round, roundOver, gameOver,
+    return {getRound, round, roundOver, getRoundOver, gameOver,
             isRoundOver, isGameOver, displayMessage, startGame, selectFirstPlayer,
             currentPlayer, newRound, newGame, resetGame, roundReset};
 })();
