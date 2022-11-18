@@ -264,7 +264,13 @@ const game = (() => {
     };
 
     /** Randomly decides who plays first, calls setPlayStatus(). */
-    const selectFirstPlayer = () => {};
+    const selectFirstPlayer = () => {
+        // Returns a random integer from 0 to 1.
+        let player = ((Math.floor((Math.random() * 2))) === 0) ? "W" : "F";
+
+        (player === "W") ? ocean.setPlayStatus(ocean.getPlayStatus()) :
+                           blaze.setPlayStatus(blaze.getPlayStatus())
+    };
 
     /**
      * Assigns whose turn it is to play by calling setPlayStatus(), which sets canPlay to true or false. 
