@@ -226,10 +226,17 @@ const game = (() => {
     };
 
     /** Clears the board, sets gameOver and roundOver to false, setPlayStatus to false. */
-    const resetGame = () => {};
+    const resetGame = () => {
+        gameOver = false;
+        roundOver = false;
+        // setPlayStatus to false.
+    };
 
     /** Sets round to 1, and renders it to the page. */
-    const roundReset = () => {};
+    const roundReset = () => {
+        round = 1;
+        // renders it to the page.
+    };
 
     return {getRound, round, roundOver, gameOver,
             isRoundOver, isGameOver, displayMessage, startGame, selectFirstPlayer,
