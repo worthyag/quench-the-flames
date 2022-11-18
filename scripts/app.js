@@ -72,6 +72,7 @@ const gameBoard = (() => {
             gameBoard[index] = marker;
             clearGameGrid();
             renderGameBoard();
+            game.currentPlayer(); // switches players turn
         }
         else
             console.log("Error not empty!");
@@ -113,18 +114,13 @@ const player = (name, character) => {
     const play = () => {
         (gameBoard.getGameGridArray()).forEach((div, index) => {
             div.addEventListener('click', (e) => {
-                // console.log(`Hi ${parseInt(div.getAttribute('data-index'))}!`);
-
+                // Getting the data-index of each element
                 const divAttr = parseInt(e.target.getAttribute('data-index'));
                 const imgAttr = parseInt(e.target.parentNode.getAttribute('data-index'));
 
                 if ((divAttr === index) || (imgAttr === index)) {
-                    // console.log("You found me");
-
-                    if (canPlay) {
+                    if (canPlay)
                         gameBoard.addMarker(marker, index);
-                        // canPlay = false;
-                    }
                 }
 
             });
@@ -256,11 +252,11 @@ const game = (() => {
         return winnerMsg;
     };
 
-    /** Begins the game, by calling resetGame(), renderGameBoard(), and calls selectFirstPlayer(). */
+    /** Begins the game, by calling resetGame(), renderGameBoard(), and calls currentPlayer(). */
     const startGame = () => {
         resetGame();
         gameBoard.renderGameBoard();
-        selectFirstPlayer();
+        currentPlayer();
     };
 
     /** Randomly decides who plays first, calls setPlayStatus(). */
@@ -276,7 +272,16 @@ const game = (() => {
      * Assigns whose turn it is to play by calling setPlayStatus(), which sets canPlay to true or false. 
      * Highlights current player’s name.
      */
-    const currentPlayer = () => {};
+    const currentPlayer = () => {
+        if (ocean.getPlayStatus() === blaze.getPlayStatus()) {
+            selectFirstPlayer();
+        }
+
+        else {
+            ocean.setPlayStatus(ocean.getPlayStatus());
+            blaze.setPlayStatus(blaze.getPlayStatus());
+        }
+    };
 
     /** round++. Calls isGameOver(). Calls startGame(). */
     const newRound = () => {
@@ -317,7 +322,7 @@ const game = (() => {
 
 // Characters / Players
 // Ocean
-const ocean = player("Oceania", "water bearer");
+const ocean = player("Oceana", "water bearer");
 ocean.assignMarker();
 
 // Blaze
