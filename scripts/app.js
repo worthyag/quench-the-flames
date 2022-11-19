@@ -161,8 +161,11 @@ const game = (() => {
     /** Sets the roundOver boolean. */
     const setRoundOver = (bool) => roundOver = bool;
 
-    /** Sets the roundOver boolean. */
+    /** Sets the gameOver boolean. */
     const setGameOver = (bool) => gameOver = bool;
+
+    /** Returns the gameOver boolean. */
+    const getGameOver = () => gameOver;
 
     /**
      * Checks for a 3 in a row pattern or a tie, and sets the roundOver boolean accordingly. 
@@ -255,11 +258,11 @@ const game = (() => {
     const isGameOver = () => {
         if (round > 3) {
             gameOver = true;
-
-            // resetGame()
             // roundReset()
             // displayMessage()
             // newGame()
+
+            return gameOver;
         }
     };
 
@@ -271,11 +274,21 @@ const game = (() => {
 
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls currentPlayer(). */
     const startGame = () => {
-        roundMsg.textContent = getRound();
 
-        resetGame();
-        gameBoard.renderGameBoard();
-        currentPlayer();
+        if (!getGameOver()) {
+            roundMsg.textContent = getRound();
+
+            resetGame();
+            gameBoard.renderGameBoard();
+            currentPlayer();
+        }
+        else {
+            console.log("GAME FINISHED!!");
+            console.log(displayMessage());
+            resetGame();
+        }
+        
+        
     };
 
     /** Randomly decides who plays first, calls setPlayStatus(). */
@@ -304,36 +317,41 @@ const game = (() => {
 
     /** round++. Calls isGameOver(). Calls startGame(). */
     const newRound = () => {
-        round++;
-        roundMsg.textContent = getRound();
-        isGameOver();
-
-        setTimeout(function () {
+        setTimeout(() => {
             for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
                 gameBoard.getGameGridArray()[i].classList.remove("won");
                 gameBoard.getGameGridArray()[i].classList.remove("tie");
             }
 
-        }, 1000);
-        console.log("Reached the end.");
+        }, 1500);
+
+        round++;
+    
+        if (isGameOver()) {
+            return startGame();
+        };
+
+        setTimeout(() => roundMsg.textContent = getRound(), 1500);
 
 
-        startGame();
+        setTimeout(() => {
+            startGame();
+        }, 1500);
     };
 
-    const startRound = () => {
-        setTimeout(function () {
-            resetGame();
+    // const startRound = () => {
+    //     setTimeout(function () {
+    //         resetGame();
 
-            for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
-                gameBoard.getGameGridArray()[i].classList.remove("won");
-                gameBoard.getGameGridArray()[i].classList.remove("tie");
-            }
+    //         for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
+    //             gameBoard.getGameGridArray()[i].classList.remove("won");
+    //             gameBoard.getGameGridArray()[i].classList.remove("tie");
+    //         }
 
-        }, 1000);
+    //     }, 1000);
 
-        currentPlayer();
-    }
+    //     currentPlayer();
+    // }
 
     /** Displays the button to start/restart game. */
     const newGame = () => {
