@@ -147,6 +147,14 @@ const game = (() => {
     let gameOver = false;
     /** Where the round number is displayed on the screen. */
     const roundMsg = document.querySelector("span.round-number");
+    /** Where the water bearer score is displayed on the screen. */
+    const waterScoreDOM = document.querySelector(".wb-score");
+    /** Where the fire demon score is displayed on the screen. */
+    const  fireScoreDOM = document.querySelector(".fd-score");
+    /** Where the water bearer score counter. */
+    let waterScore = 0;
+    /** Where the fire demon score counter. */
+    let  fireScore = 0;
 
 
     /** Returns the round number. */
@@ -166,6 +174,18 @@ const game = (() => {
 
     /** Returns the gameOver boolean. */
     const getGameOver = () => gameOver;
+
+    /** Returns the water bearer's score. */
+    const getWaterScore = () => waterScore;
+
+    /** Sets the water bearer's score. */
+    const setWaterScore = (i) => waterScore = i;
+
+    /** Returns the fire demon's score. */
+    const getFireScore = () => fireScore;
+
+    /** Sets the fire demon's score. */
+    const setFireScore = (i) => fireScore = i;
 
     /**
      * Checks for a 3 in a row pattern or a tie, and sets the roundOver boolean accordingly. 
@@ -234,6 +254,8 @@ const game = (() => {
                 gameBoard.getGameGridArray()[status[1]].classList.add("won");
                 gameBoard.getGameGridArray()[status[2]].classList.add("won");
                 gameBoard.getGameGridArray()[status[3]].classList.add("won");
+
+                (board[status[1]] === "W") ? waterScore++ : fireScore++;
             }
             else {
                 gameBoard.getGameGridArray().forEach((div) => {
@@ -268,8 +290,13 @@ const game = (() => {
 
     /** Creates the display element that congratulates the winner. */
     const displayMessage = () => {
-        const winnerMsg = helper.createElement('div', 'class', 'winner');
-        return winnerMsg;
+        const displayMsg = document.querySelector(".display-msg");
+        displayMsg.classList.remove("hidden");
+
+
+        const msg = helper.createElement('div', 'class', 'winner');
+
+        return msg;
     };
 
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls currentPlayer(). */
@@ -277,6 +304,8 @@ const game = (() => {
 
         if (!getGameOver()) {
             roundMsg.textContent = getRound();
+            waterScoreDOM.textContent = getWaterScore();
+            fireScoreDOM.textContent = getFireScore();
 
             resetGame();
             gameBoard.renderGameBoard();
@@ -284,8 +313,8 @@ const game = (() => {
         }
         else {
             console.log("GAME FINISHED!!");
-            console.log(displayMessage());
-            resetGame();
+            setInterval(() => resetGame(), 3000);
+            setInterval(() => displayMessage(), 3000);
         }
         
         
@@ -313,6 +342,14 @@ const game = (() => {
             ocean.setPlayStatus(ocean.getPlayStatus());
             blaze.setPlayStatus(blaze.getPlayStatus());
         }
+
+        const waterBearer = document.querySelector(".player-1");
+        const fireDemon = document.querySelector(".player-2");
+
+        if (!roundOver) {
+            (ocean.getPlayStatus()) ? waterBearer.classList.add("current") : waterBearer.classList.remove("current");
+            (blaze.getPlayStatus()) ? fireDemon.classList.add("current") : fireDemon.classList.remove("current");
+        }
     };
 
     /** round++. Calls isGameOver(). Calls startGame(). */
@@ -326,6 +363,11 @@ const game = (() => {
         }, 1500);
 
         round++;
+
+        setTimeout(() => {
+            waterScoreDOM.textContent = getWaterScore();
+            fireScoreDOM.textContent = getFireScore();
+        }, 1500);
     
         if (isGameOver()) {
             return startGame();
@@ -339,19 +381,6 @@ const game = (() => {
         }, 1500);
     };
 
-    // const startRound = () => {
-    //     setTimeout(function () {
-    //         resetGame();
-
-    //         for (let i = 0; i < (gameBoard.getGameGridArray()).length; i++) {
-    //             gameBoard.getGameGridArray()[i].classList.remove("won");
-    //             gameBoard.getGameGridArray()[i].classList.remove("tie");
-    //         }
-
-    //     }, 1000);
-
-    //     currentPlayer();
-    // }
 
     /** Displays the button to start/restart game. */
     const newGame = () => {
@@ -372,10 +401,15 @@ const game = (() => {
         blaze.setPlayStatus(true);
     };
 
-    /** Sets round to 1, and renders it to the page. */
+    /** Sets round to 1, sets the players scores to 0, and renders it to the page. */
     const roundReset = () => {
         setRound(1);
         roundMsg.textContent = getRound();
+
+        setWaterScore(0);
+        setFireScore(0);
+        waterScoreDOM.textContent = getWaterScore();
+        fireScoreDOM.textContent = getFireScore();
     };
 
     return {getRound, round, roundOver, getRoundOver, gameOver,
