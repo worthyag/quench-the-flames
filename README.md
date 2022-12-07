@@ -3,7 +3,7 @@ A Tic Tac Toe ( or Noughts + Crosses) game with a twist.<br>
 
 \*For the most part the game is complete, and is completely functional, however there are still some things that I would like to add, and some bugs left to completely iron out to improve the UX.  
 
-You can view the game [here](#).
+You can view the game [here](https://worthyag.github.io/quench-the-flames/start.html).
 <br>
 
 ### Start Page
