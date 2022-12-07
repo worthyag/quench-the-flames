@@ -293,11 +293,27 @@ const game = (() => {
         const displayMsg = document.querySelector(".display-msg");
         displayMsg.classList.remove("hidden");
 
+        let winnerName = "";
 
-        const msg = helper.createElement('div', 'class', 'winner');
+        (waterScore > fireScore) ? winnerName = "Water Bearer" :
+        (fireScore > waterScore) ? winnerName = "Fire Demon" : winnerName = "tie";
 
-        return msg;
+        const congrats = document.querySelector(".winner");
+
+        if (winnerName !== "tie") {
+            congrats.textContent = congrats.textContent.concat(`${winnerName}!`);
+        }
+        else {
+            congrats.textContent = "It looks like you tied!";
+            document.querySelector(".eval").textContent = "";
+        }
+
+        console.log(congrats);
+
+        roundReset();
+        return 0;
     };
+
 
     /** Begins the game, by calling resetGame(), renderGameBoard(), and calls currentPlayer(). */
     const startGame = () => {
@@ -314,10 +330,9 @@ const game = (() => {
         else {
             console.log("GAME FINISHED!!");
             setInterval(() => resetGame(), 3000);
-            setInterval(() => displayMessage(), 3000);
+            setInterval(() => "displayMessage()", 3000);
+            displayMessage();
         }
-        
-        
     };
 
     /** Randomly decides who plays first, calls setPlayStatus(). */

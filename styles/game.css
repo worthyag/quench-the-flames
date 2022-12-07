@@ -177,7 +177,7 @@ section.display-msg {
     width: 60rem;
     height: 38rem;
     margin: 0 auto;
-
+    border-radius: 16px;
 }
 
 .hidden {
@@ -188,6 +188,17 @@ section > h2 {
     text-align: center;
     font-size: 4rem;
     padding-top: 16px;
+}
+
+section > p.congrats {
+    text-align: center;
+    font-size: 2rem;
+    padding-top: 1.5em;
+}
+
+#emoji {
+    width: 20em;
+    padding: 0 20em;
 }
 
 
